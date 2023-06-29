@@ -1,0 +1,35 @@
+School ID,school_name,type,size,budget,,,,,,,,,,,,,,
+0,Huang High School,Government,2917,1910635,,,,,,,,,,,,,,
+1,Figueroa High School,Government,2949,1884411,,,,,,,,,,,,,,
+2,Shelton High School,Independent,1761,1056600,,,,,,,,,,,,,,# Calculate data for School Summary
+3,Hernandez High School,Government,4635,3022020,,,,,,,,,,,,,,"school_total_students = school_data_complete.groupby(""school_name"")[""Student ID""].count()"
+4,Griffin High School,Independent,1468,917500,,,,,,,,,,,,,,"school_total_budget = school_data_complete.groupby(""school_name"")[""budget""].mean()"
+5,Wilson High School,Independent,2283,1319574,,,,,,,,,,,,,,school_per_student_budget = total_budget / total_students
+6,Cabrera High School,Independent,1858,1081356,,,,,,,,,,,,,,"school_avg_math_score = school_data_complete.groupby(""school_name"")[""maths_score""].mean()"
+7,Bailey High School,Government,4976,3124928,,,,,,,,,,,,,,"school_avg_reading_score = school_data_complete.groupby(""school_name"")[""reading_score""].mean()"
+8,Holden High School,Independent,427,248087,,,,,,,,,,,,,,"school_pass_math = school_data_complete[school_data_complete[""maths_score""] >= 50].groupby(""school_name"")[""Student ID""].count()"
+9,Pena High School,Independent,962,585858,,,,,,,,,,,,,,school_pass_math_percent = (school_pass_math / total_students) * 100
+10,Wright High School,Independent,1800,1049400,,,,,,,,,,,,,,"school_pass_reading = school_data_complete[school_data_complete[""reading_score""] >=50].groupby(""school_name"")[""Student ID""].count()"
+11,Rodriguez High School,Government,3999,2547363,,,,,,,,,,,,,,school_pass_reading_percent = (school_pass_reading / total_students) * 100
+12,Johnson High School,Government,4761,3094650,,,,,,,,,,,,,,"school_pass_overall = school_data_complete[(school_data_complete[""maths_score""] >= 50) & (school_data_complete[""reading_score""] >= 50)].groupby(""school_name"")[""Student ID""].count()"
+13,Ford High School,Government,2739,1763916,,,,,,,,,,,,,,school_pass_overall_percent = (school_pass_overall / total_students) * 100
+14,Thomas High School,Independent,1635,1043130,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,# Create the School Summary DataFrame
+,,,,,,,,,,,,,,,,,,school_summary_df = pd.DataFrame({
+,,,,,,,,,,,,,,,,,,"    ""School Type"": school_data.set_index(""school_name"")[""type""],"
+,,,,,,,,,,,,,,,,,,"    ""Total Students"": school_total_students,"
+,,,,,,,,,,,,,,,,,,"    ""Total School Budget"": school_total_budget,"
+,,,,,,,,,,,,,,,,,,"    ""Per Student Budget"": school_per_student_budget,"
+,,,,,,,,,,,,,,,,,,"    ""Average Math Score"": school_avg_math_score,"
+,,,,,,,,,,,,,,,,,,"    ""Average Reading Score"": school_avg_reading_score,"
+,,,,,,,,,,,,,,,,,,"    ""% Passing Math"": school_pass_math_percent,"
+,,,,,,,,,,,,,,,,,,"    ""% Passing Reading"": school_pass_reading_percent,"
+,,,,,,,,,,,,,,,,,,"    ""% Overall Passing"": school_pass_overall_percent"
+,,,,,,,,,,,,,,,,,,})
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,# Formatting the columns
+,,,,,,,,,,,,,,,,,,"school_summary_df[""Total School Budget""] = school_summary_df[""Total School Budget""].map(""${:,.2f}"".format)"
+,,,,,,,,,,,,,,,,,,"school_summary_df[""Per Student Budget""] = school_summary_df[""Per Student Budget""].map(""${:.2f}"".format)"
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,# Display the School Summary DataFrame
+,,,,,,,,,,,,,,,,,,school_summary_df
